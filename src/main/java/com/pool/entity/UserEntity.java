@@ -27,20 +27,29 @@ public class UserEntity {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "USER_ID")
 	private Long userId;
+	
 	@Column(name = "FIRST_NAME")
 	private String firstName;
+	
 	@Column(name = "LAST_NAME")
 	private String lastName;
+	
 	@Column(name = "EMAIL")
 	@NotBlank
 	private String email;
+	
 	@Column(name = "DOJ")
 	private Date dateOfJoining;
+	
 	@Column(name = "ACTIVE")
 	private Boolean active;
+	
 	@Column(name = "USER_NAME")
 	private String userName;
-
+	
+    @Column(name = "PROFILE_IMG")
+	private String profileImage;
+	
 	public UserEntity() {
 
 	}

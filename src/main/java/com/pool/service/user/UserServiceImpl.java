@@ -3,6 +3,7 @@ package com.pool.service.user;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import com.pool.entity.UserEntity;
@@ -35,7 +36,21 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public CommonResponseModel deleteUser(Long userId) {
-		return null;
+		Optional<UserEntity> optionalUserEntity = userRepository.findById(userId);
+		CommonResponseModel commonResponseModel=new CommonResponseModel();
+		optionalUserEntity.ifPresentOrElse((data)->{
+			userRepository.delete(optionalUserEntity.get());
+			commonResponseModel.setMessage(EpoolConstants.DELETE_MESSAGE).setStatusCode(HttpStatus.OK.value());
+		}, ()->{
+			throw new NoRecardsFoundException(EpoolConstants.USER_NOT_FOUNT);
+		});
+		
+		if (optionalUserEntity.isPresent()) {
+			userRepository.delete(optionalUserEntity.get());
+			return new CommonResponseModel().setMessage(EpoolConstants.DELETE_MESSAGE).setStatusCode(HttpStatus.OK.value());
+		} else {
+			throw new NoRecardsFoundException(EpoolConstants.USER_NOT_FOUNT);
+		}
 	}
 
 	@Override
@@ -46,14 +61,15 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserEntity saveUser(UserEntity userEntity) {
+
+		return userRepository.save(userEntity);
 		
-		return null;
 	}
 
 	@Override
 	public UserEntity updateUser(UserEntity userEntity) {
-		// TODO Auto-generated method stub
-		return null;
+
+		return userRepository.save(userEntity);
 	}
 
 	@Override

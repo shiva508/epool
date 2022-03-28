@@ -18,14 +18,14 @@ import lombok.extern.slf4j.Slf4j;
 public class EpoolUtils {
 
 	public Optional<List<ValidationResponse>>  validationResponseExtractor(BindingResult result) {
-		Optional<List<ValidationResponse>> optional=Optional.empty();
+		Optional<List<ValidationResponse>> optionalData=Optional.empty();
 		List<ValidationResponse> validationResponse = new ArrayList<>();
 		if(result.hasErrors()) {
 			List<FieldError> errorList = result.getFieldErrors();
 			validationResponse=errorList.stream().map(error->new ValidationResponse(error.getField(), error.getDefaultMessage())).collect(Collectors.toList());
 		}
 		
-		return optional.ofNullable(validationResponse);
+		return optionalData.ofNullable(validationResponse);
 	}
 	
 }
